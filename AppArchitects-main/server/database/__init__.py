@@ -1,0 +1,53 @@
+CREATE_TABLE_SESSION = """
+CREATE TABLE IF NOT EXISTS session (
+    sessionID INTEGER PRIMARY KEY AUTOINCREMENT,
+    farmerID INTEGER,
+    loginOn DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    logoutOn DATETIME DEFAULT NULL,
+    deviceDetail VARCHAR(255) NOT NULL,
+    FOREIGN KEY (farmerID) REFERENCES supplier(farmerID)
+);
+
+"""
+
+
+CREATE_TABLE_SUPPLIER = """
+CREATE TABLE IF NOT EXISTS supplier (
+    farmerID INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(255) NOT NULL,
+    dob DATETIME NOT NULL,
+    contactNo VARCHAR(255) UNIQUE NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    societyID INTEGER NOT NULL,
+    FOREIGN KEY (societyID) REFERENCES society(societyID)
+);
+
+"""
+
+CREATE_TABLE_TRANSACTION = """
+CREATE TABLE IF NOT EXISTS transactions (
+    transactionID INTEGER PRIMARY KEY AUTOINCREMENT,
+    farmerID INTEGER,
+    dateOfTransaction DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    quantity DECIMAL(10, 5) NOT NULL,
+    quality DECIMAL (15, 7) NOT NULL,
+    rate DECIMAL(10, 5) NOT NULL,
+    societyID INTEGER NOT NULL,
+    FOREIGN KEY (farmerID) REFERENCES supplier(farmerID),
+    FOREIGN KEY (societyID) REFERENCES society(societyID)
+);
+"""
+
+
+CREATE_TABLE_SOCIETY = """
+    CREATE TABLE IF NOT EXISTS society (
+        societyID INTEGER PRIMARY KEY AUTOINCREMENT,
+        name VARCHAR(255) NOT NULL,
+        district VARCHAR(255) NOT NULL,
+        taluk CHAR(64) NOT NULL,
+        block VARCHAR(255) NOT NULL,
+        villagePanchayat VARCHAR(255) NOT NULL,
+        revenueVillage VARCHAR(255) NOT NULL
+    )
+"""
+
